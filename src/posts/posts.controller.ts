@@ -51,4 +51,10 @@ async uploadImages(
   return this.postsService.uploadImages(postId, files);
 }
 
+  @Post(':postId/validate-food')
+  async validateFood(@Param('postId') postId: number) {
+    console.log("postId", postId);
+    return this.postsService.validateFood(postId);
+  }
+
 }

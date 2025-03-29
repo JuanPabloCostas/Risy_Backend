@@ -23,7 +23,7 @@ export class Post {
     title: string;
 
     @Column('json', { nullable: true })
-  photoUrls: string[];
+    photoUrls: string[];
 
     @Column({ name: "description", type: "varchar", nullable: false })
     description: string;

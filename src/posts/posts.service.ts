@@ -32,9 +32,19 @@ export class PostsService {
   public async findOne(_id: ObjectId): Promise<Post> {
 
     console.log("post id:", _id);
+
     
 
-    const post = await this.postRepository.findOne({where: { _id, status: true }, relations: { provider: true }});
+    const post = await this.postRepository.findOne({
+      where: { _id, status: true }, 
+      // relations: { provider: true }
+      join: {
+        alias: "post",
+        innerJoinAndSelect: {
+          "provider": "post.provider"
+        }
+      }
+    });
 
     console.log("post:", post);
     

@@ -35,13 +35,13 @@ export class User {
 })
     type: UserType;
 
-    
+
 @Column({ name: "registeredAt", type: "datetime", default: () => "CURRENT_TIMESTAMP" })  // Añadido "name"
     registeredAt: Date;
 
 
     @ManyToMany(() => Post, (post) => post.users)
-    // @JoinTable()
+    @JoinTable()
     posts: Post[]
 
     @OneToMany(() => Comment, (comment) => comment.user)

@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsPhoneNumber, IsString, Matches } from "class-validator";
+import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsPhoneNumber, IsPositive, IsString, Matches } from "class-validator";
 import { In } from "typeorm";
 
 enum UserType {
@@ -44,4 +44,16 @@ export class LoginDto {
     @IsString()
     @IsNotEmpty()
     password: string;
+}
+
+export class LikePostDto {
+    @IsInt()
+    @IsPositive()
+    @IsNotEmpty()
+    postId: number;
+
+    @IsInt()
+    @IsPositive()
+    @IsNotEmpty()
+    userId: number;
 }

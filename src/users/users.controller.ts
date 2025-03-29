@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFile, ParseIntPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto, LoginDto } from './dto/create-user.dto';
+import { CreateUserDto, LikePostDto, LoginDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { imageFilter } from 'src/common/helpers/fileFilter';
@@ -37,5 +37,15 @@ export class UsersController {
     @UploadedFile() userImage: Express.Multer.File,
   ){
     return this.usersService.uploadImage(userId, userImage);
+  }
+
+  @Get('/:userId')
+  getUserById(@Param('userId') userId: number) {
+    return this.usersService.getLikedPosts(userId);
+  }
+
+  @Post('/like')
+  likePost(@Body() likePostDto: LikePostDto) {
+    return this.usersService.likePost(likePostDto);
   }
 }

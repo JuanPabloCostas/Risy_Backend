@@ -1,17 +1,20 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto, LoginDto } from './dto/create-user.dto';
+import { CreateUserDto, LikePostDto, LoginDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { MongoRepository } from 'typeorm';
 import { S3Service } from 'src/aws/s3.service';
+import { Post } from 'src/posts/entities/post.entity';
 
 @Injectable()
 export class UsersService {
 
   constructor(
     @InjectRepository(User) 
-    private readonly userRepository,
+    private readonly userRepository: MongoRepository<User>,
     private readonly s3Service: S3Service,
+    @InjectRepository(Post)
+    private readonly postRepository: MongoRepository<Post>,
   ) {}
 
   public async listAllUsers(): Promise<User[]> {
@@ -42,7 +45,7 @@ export class UsersService {
 
     return user;
   }
-  
+
   public async getUserById(id: number): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
 
@@ -74,6 +77,43 @@ export class UsersService {
     } catch (error) { 
       throw new BadRequestException('Error uploading image');
     }
+  }
+
+  public async getLikedPosts(userId: number): Promise<Post[]> {
+    const user = await this.userRepository.findOne({ where: { id: userId }, relations: {posts: { comments: true, provider: true } } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user.posts
+
+  }
+
+  public async likePost(likePostDto: LikePostDto) {
+    const { postId, userId } = likePostDto;
+
+    const user = await this.userRepository.findOne({ where: { id: userId }, relations: {posts: { comments: true, provider: true } } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const post = await this.postRepository.findOne({ where: { id: postId, status: true } });
+
+    if (!post) {
+      throw new NotFoundException('Post not found');
+    }
+
+    const posts = user.posts.filter((post) => post.status === true).concat(post);
+
+    user.posts = posts;
+    
+    await this.userRepository.save(user);
+
+    return
+
+
   }
 
 

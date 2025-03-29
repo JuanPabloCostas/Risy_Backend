@@ -1,4 +1,6 @@
-import { Column, ObjectIdColumn } from "typeorm";
+import { Column, ObjectIdColumn, OneToMany } from "typeorm";
+import { Param } from '@nestjs/common';
+import { Post } from "src/posts/entities/post.entity";
 
 export class Provider {
     @ObjectIdColumn()
@@ -24,4 +26,7 @@ export class Provider {
     
     @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })   
     registeredAt: Date;
+
+    @OneToMany(() => Post, (post) => post.id)
+    posts: Post
 }

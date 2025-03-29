@@ -1,4 +1,5 @@
-import { Column, ObjectIdColumn } from "typeorm";
+import { User } from "src/users/entities/user.entity";
+import { Column, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn } from "typeorm";
 
 enum PostType {
     SALE = "sale",
@@ -41,4 +42,10 @@ export class Post {
     @Column({ type: "enum",default: PostStatus.ACTIVE })
     status: PostType;
 
+    @ManyToOne(() => User, (user) => user.id)
+    user: User;
+
+    @ManyToMany(() => User, (user) => user.id)
+    @JoinTable()
+    users: User[];
 }

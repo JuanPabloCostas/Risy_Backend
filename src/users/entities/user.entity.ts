@@ -1,5 +1,5 @@
 import { Post } from "src/posts/entities/post.entity";
-import { Column, Entity, JoinTable, ManyToMany, ObjectIdColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ObjectId, ObjectIdColumn } from "typeorm";
 
 enum UserType {
     PUBLICUSER = "publicuser", 
@@ -9,7 +9,7 @@ enum UserType {
 @Entity({ database: 'mongodb' })
 export class User {
     @ObjectIdColumn()
-    id: string; 
+    _id: ObjectId; 
 
     @Column()
     name: string;

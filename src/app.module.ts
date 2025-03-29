@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { ProvidersModule } from './providers/providers.module';
+import { AwsModule } from './aws/aws.module';
+import { S3Service } from './s3.service';
 import config from './core/config/config';
 
 @Module({
@@ -17,9 +19,10 @@ import config from './core/config/config';
     TodoModule,
     UsersModule,
     PostsModule,
-    ProvidersModule
+    ProvidersModule,
+    AwsModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, S3Service],
 })
 export class AppModule {}

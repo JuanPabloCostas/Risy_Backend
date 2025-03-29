@@ -1,6 +1,7 @@
-import { Column, ObjectIdColumn, OneToMany } from "typeorm";
+import { Column, Entity, ObjectIdColumn, OneToMany } from "typeorm";
 import { Post } from "src/posts/entities/post.entity";
 
+@Entity({ database: 'mongodb' })
 export class Provider {
     @ObjectIdColumn()
     id: string;
@@ -26,6 +27,6 @@ export class Provider {
     @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })   
     registeredAt: Date;
 
-    @OneToMany(() => Post, (post) => post.id)
-    posts: Post
+    @OneToMany(() => Post, (post) => post.provider)
+    posts: Post[]
 }

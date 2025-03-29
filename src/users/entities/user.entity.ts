@@ -1,10 +1,12 @@
-import { Column, ObjectIdColumn } from "typeorm";
+import { Post } from "src/posts/entities/post.entity";
+import { Column, Entity, JoinTable, ManyToMany, ObjectIdColumn } from "typeorm";
 
 enum UserType {
     PUBLICUSER = "publicuser", 
     ORGANIZATON = "organization", 
 }
 
+@Entity({ database: 'mongodb' })
 export class User {
     @ObjectIdColumn()
     id: string; 
@@ -12,7 +14,7 @@ export class User {
     @Column()
     name: string;
 
-    @Column()
+    @Column({ unique: true, nullable: false })
     email: string;
 
     @Column()
@@ -34,4 +36,8 @@ export class User {
 
     @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
     registeredAt: Date;
+
+    @ManyToMany(() => Post, (post) => post.users)
+    // @JoinTable()
+    posts: Post[]
 }

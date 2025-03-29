@@ -1,5 +1,10 @@
 import { Column, ObjectIdColumn } from "typeorm";
 
+enum UserType {
+    PUBLICUSER = "publicuser", 
+    ORGANIZATON = "organization", 
+}
+
 export class User {
     @ObjectIdColumn()
     id: string; 
@@ -22,7 +27,7 @@ export class User {
     @Column(
         {
         type: "enum",
-        enum: ["admin", "user", "superadmin"],
+        enum: UserType,
     }
     )
     type: UserType
@@ -30,8 +35,3 @@ export class User {
     @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
     registeredAt: Date;
 }
-
-enum UserType {
-    PUBLICUSER = "publicuser", 
-    ORGANIZATON = "organization", 
-  }

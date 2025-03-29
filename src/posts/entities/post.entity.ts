@@ -8,7 +8,7 @@ enum PostType {
     DONATE = "donate",
     COMPOSED = "compose",
 }
-enum PostStatus  {
+enum PostStatus {
     ACTIVE = "active",
     INACTIVE = "inactive",
 }
@@ -18,33 +18,32 @@ export class Post {
     @PrimaryGeneratedColumn({ name: "id" })
     id: number;
 
-@Column({ name: "title", type: "varchar", nullable: false })
+    @Column({ name: "title", type: "varchar", nullable: false })
     title: string;
 
-@Column({ name: "photoUrl", type: "varchar", nullable: true })
+    @Column({ name: "photoUrl", type: "varchar", nullable: true })
     photoUrl: string;
 
-@Column({ name: "description", type: "varchar", nullable: false })
+    @Column({ name: "description", type: "varchar", nullable: false })
     description: string;
 
-@Column({ name: "originalPrice", type: "varchar", nullable: true })
+    @Column({ name: "originalPrice", type: "varchar", nullable: true })
     originalPrice: string;
 
-@Column({ name: "price", type: "varchar", nullable: true })
+    @Column({ name: "price", type: "varchar", nullable: true })
     price: string;
 
-@Column({ name: "details", type: "varchar", nullable: false })
+    @Column({ name: "details", type: "varchar", nullable: false })
     details: string;
 
-@Column({ name: "type", type: "enum", enum: PostType, nullable: false })
+    @Column({ name: "type", type: "enum", enum: PostType, nullable: false })
     type: PostType;
 
-@Column({ name: "registeredAt", type: "datetime", default: () => "CURRENT_TIMESTAMP" })
+    @Column({ name: "registeredAt", type: "datetime", default: () => "CURRENT_TIMESTAMP" })
     registeredAt: Date;
 
-@Column({ name: "status", type: "enum", enum: PostStatus, default: PostStatus.ACTIVE })
-    status: PostStatus;
-
+    @Column({ type: "bool", default: true })
+    status: boolean;
 
     @ManyToMany(() => User, (user) => user.posts)
     // @JoinTable()

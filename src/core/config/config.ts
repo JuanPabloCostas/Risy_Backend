@@ -4,7 +4,7 @@ export default () => {
     port: +process.env.PORT,
     username: process.env.USERNAME,
     password:process.env.PASSWORD,
-    datase: process.env.DATABASE,
+    database: process.env.DATABASE,
   };
 
   console.log(config);

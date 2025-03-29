@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -29,7 +30,8 @@ export class TodoController {
   @Get()
   findAll() {
     // return this.todosService.findAllTodos(); 
-    return "Hello world from todo controller"
+    // throw new BadRequestException("Eres puto")
+    throw new Error("bad")
   }
 
   @Get(':id')

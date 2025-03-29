@@ -31,6 +31,7 @@ export class PostsService {
 
   public async findOne(id: number): Promise<Post> {
 
+
     console.log("post id:", id);
     
 

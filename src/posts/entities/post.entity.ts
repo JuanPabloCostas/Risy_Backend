@@ -21,7 +21,7 @@ export class Post {
     @Column()
     title: string;
 
-    @Column()
+    @Column({ nullable: true })
     photoUrl: string;
 
     @Column()
@@ -43,7 +43,7 @@ export class Post {
     registeredAt: Date;
 
     @Column({ type: "enum",default: PostStatus.ACTIVE })
-    status: PostType;
+    status: PostStatus;
 
     @ManyToMany(() => User, (user) => user.posts)
     @JoinTable()

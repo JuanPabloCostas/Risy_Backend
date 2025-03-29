@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto, LoginDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -26,15 +26,16 @@ export class UsersController {
   }
 
   @Patch(':userId/image')
-  @UseInterceptors(FileInterceptor('companyImage', {
+  @UseInterceptors(FileInterceptor('userImage', {
     limits: {
       fileSize: 1024 * 1024 * 1 // 1 MB 
     },
     fileFilter: imageFilter,
   }))
   uploadImage(
+    @UploadedFile() userImage: Express.Multer.File,
     @Param('id', ParseMongoIdPipe) id: string
   ){
-    return this.usersService.uploadImage(id);
+    return this.usersService.uploadImage(id, userImage);
   }
 }

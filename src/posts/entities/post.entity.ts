@@ -1,7 +1,8 @@
 
+import { Comment } from "src/comments/entities/comment.entity";
 import { Provider } from "src/providers/entities/provider.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, ObjectId, ObjectIdColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, ObjectId, ObjectIdColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 enum PostType {
     SALE = "sale",
@@ -51,4 +52,7 @@ export class Post {
 
     @ManyToOne(() => Provider, (provider) => provider.posts)
     provider: Provider;
+
+    @OneToMany(() => Comment, (comment) => comment.post)
+    comments: Comment[];
 }

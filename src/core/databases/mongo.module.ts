@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Comment } from 'src/comments/entities/comment.entity';
 import { Post } from 'src/posts/entities/post.entity';
 import { Provider } from 'src/providers/entities/provider.entity';
 import { Todo } from 'src/todo/entities/todo.entity';
@@ -21,10 +22,9 @@ import { getMetadataArgsStorage } from 'typeorm';
           host: configService.get('host'),
           port: configService.get('port'),
           username: configService.get('username'),
-
           password: configService.get('password'),
           database: configService.get('database'),
-          entities: [Todo, User, Post, Provider],
+          entities: [Todo, User, Post, Provider, Comment],
           synchronize: true,
           logging: true,
         };
@@ -40,7 +40,7 @@ import { getMetadataArgsStorage } from 'typeorm';
           username: configService.get('username'),
           password: configService.get('password'),
           database: configService.get('database'),
-          entities: [Todo, User, Post, Provider],
+          entities: [Todo, User, Post, Provider, Comment],
           synchronize: true,
           logging: true,
         };

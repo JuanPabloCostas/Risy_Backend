@@ -9,6 +9,7 @@ import { ProvidersModule } from './providers/providers.module';
 import { AwsModule } from './aws/aws.module';
 import { S3Service } from './aws/s3.service';
 import { CommonModule } from './common/common.module';
+import { CommentsModule } from './comments/comments.module';
 import config from './core/config/config';
 
 @Module({
@@ -22,7 +23,8 @@ import config from './core/config/config';
     PostsModule,
     ProvidersModule,
     AwsModule,
-    CommonModule
+    CommonModule,
+    CommentsModule
   ],
   controllers: [AppController],
   providers: [AppService, S3Service],

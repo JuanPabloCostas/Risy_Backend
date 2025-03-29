@@ -1,5 +1,6 @@
+import { Comment } from "src/comments/entities/comment.entity";
 import { Post } from "src/posts/entities/post.entity";
-import { Column, Entity, JoinTable, ManyToMany, ObjectId, ObjectIdColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ObjectId, ObjectIdColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 enum UserType {
     PUBLICUSER = "publicuser", 
@@ -34,6 +35,7 @@ export class User {
 })
     type: UserType;
 
+    
 @Column({ name: "registeredAt", type: "datetime", default: () => "CURRENT_TIMESTAMP" })  // Añadido "name"
     registeredAt: Date;
 
@@ -41,4 +43,7 @@ export class User {
     @ManyToMany(() => Post, (post) => post.users)
     // @JoinTable()
     posts: Post[]
+
+    @OneToMany(() => Comment, (comment) => comment.user)
+    comments: Comment[];
 }

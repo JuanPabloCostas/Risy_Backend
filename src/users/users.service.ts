@@ -43,6 +43,16 @@ export class UsersService {
     return user;
   }
 
+  public async getUserById(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException('Invalid user id');
+    }
+
+    return user;
+  }
+
   public async uploadImage(id: string, userImage: Express.Multer.File): Promise<object> {
     try{
       const { originalname, buffer } = userImage;

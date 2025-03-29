@@ -35,7 +35,7 @@ export class PostsService {
     console.log("post id:", id);
     
 
-    const post = await this.postRepository.findOne({where: { id, status: true }, relations: { provider: true }});
+    const post = await this.postRepository.findOne({where: { id, status: true }, relations: { provider: true, comments: { user: true} } });
 
     console.log("post:", post);
     

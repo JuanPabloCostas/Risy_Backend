@@ -26,6 +26,7 @@ export class CommentsService {
     const comment = this.commentRepository.create(createCommentDto);
 
     const post = await this.postRepository.findOne({ where: { id: createCommentDto.postId, status: true }});
+    
 
     if (!post) {
       throw new NotFoundException('Invalid post id');

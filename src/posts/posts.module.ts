@@ -8,9 +8,11 @@ import { ProvidersModule } from 'src/providers/providers.module';
 import { ProvidersService } from 'src/providers/providers.service';
 import { Provider } from 'src/providers/entities/provider.entity';
 import { AwsModule } from 'src/aws/aws.module';
+import { HttpModule } from '@nestjs/axios';
+import { CommonModule } from 'src/common/common.module';
 
 @Module({
-  imports: [MongoModule, TypeOrmModule.forFeature([Post]), TypeOrmModule.forFeature([Provider]), AwsModule],
+  imports: [MongoModule, TypeOrmModule.forFeature([Post]), TypeOrmModule.forFeature([Provider]), AwsModule, HttpModule, CommonModule],
   controllers: [PostsController],
   providers: [PostsService, ProvidersService],
 })

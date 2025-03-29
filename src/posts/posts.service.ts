@@ -120,11 +120,12 @@ export class PostsService {
       // Validar la imagen usando el servicio de validación
       const validationResults = await this.validatefoodService.validateImage(post.photoUrls[0]);
       console.log("validationResults", validationResults);
-      if (validationResults.status === "fungi") {
+      if (validationResults === "fungi") {
+        console.log("Post was removed");
         post.status = false;
         await this.postRepository.save(post);
         return {
-          message: 'Post was blocked',
+          message: 'Post was removed',
           validationResults: validationResults.data,
         };
       }

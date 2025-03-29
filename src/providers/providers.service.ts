@@ -11,7 +11,7 @@ export class ProvidersService {
 
   constructor(
     @InjectRepository(Provider)
-    private readonly providerRepository,
+    private readonly providerRepository: MongoRepository<Provider>,
     private readonly s3Service: S3Service,
   ) { }
 
@@ -47,7 +47,14 @@ export class ProvidersService {
 
   public async findOne(id: number): Promise<Provider> {
 
-    const provider = await this.providerRepository.findOne({ where: { id } });
+    const provider = await this.providerRepository.findOne({ 
+      where: { id },
+      relations: { posts: {comments: true} }
+    });
+
+    console.log("provider DSA:", provider);
+
+    
 
     if (!provider) {
       throw new NotFoundException('Provider not found');

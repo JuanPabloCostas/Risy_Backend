@@ -22,7 +22,7 @@ export class CreatePostDto {
     originalPrice: string;
 
     @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty() // test comment
     price: string;
 
     @IsString()

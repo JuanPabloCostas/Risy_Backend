@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseInterceptors, UploadedFile, ParseIntPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto, LoginDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -33,9 +33,9 @@ export class UsersController {
     fileFilter: imageFilter,
   }))
   uploadImage(
+    @Param('userId', ParseIntPipe) userId: number,
     @UploadedFile() userImage: Express.Multer.File,
-    @Param('id') id: string
   ){
-    return this.usersService.uploadImage(id, userImage);
+    return this.usersService.uploadImage(userId, userImage);
   }
 }

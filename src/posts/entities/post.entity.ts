@@ -1,7 +1,7 @@
 
 import { Provider } from "src/providers/entities/provider.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, ObjectId, ObjectIdColumn } from "typeorm";
 
 enum PostType {
     SALE = "sale",
@@ -16,7 +16,7 @@ enum PostStatus  {
 @Entity({ database: 'mongodb' })
 export class Post {
     @ObjectIdColumn()
-    id: string;
+    _id: ObjectId;
 
     @Column()
     title: string;

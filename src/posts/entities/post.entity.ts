@@ -1,5 +1,7 @@
+
+import { Provider } from "src/providers/entities/provider.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn } from "typeorm";
 
 enum PostType {
     SALE = "sale",
@@ -11,6 +13,7 @@ enum PostStatus  {
     INACTIVE = "inactive",
 }
 
+@Entity({ database: 'mongodb' })
 export class Post {
     @ObjectIdColumn()
     id: string;
@@ -42,10 +45,10 @@ export class Post {
     @Column({ type: "enum",default: PostStatus.ACTIVE })
     status: PostStatus;
 
-    @ManyToOne(() => User, (user) => user.id)
-    user: User;
-
-    @ManyToMany(() => User, (user) => user.id)
-    @JoinTable()
+    @ManyToMany(() => User, (user) => user.posts)
+    // @JoinTable()
     users: User[];
+
+    @ManyToOne(() => Provider, (provider) => provider.posts)
+    provider: Provider;
 }

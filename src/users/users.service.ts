@@ -10,7 +10,7 @@ export class UsersService {
 
   constructor(
     @InjectRepository(User) 
-    private readonly userRepository: MongoRepository<User>,
+    private readonly userRepository,
     private readonly s3Service: S3Service,
   ) {}
 
@@ -42,7 +42,7 @@ export class UsersService {
 
     return user;
   }
-
+  
   public async getUserById(id: number): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
 
@@ -53,12 +53,24 @@ export class UsersService {
     return user;
   }
 
-  public async uploadImage(id: string, userImage: Express.Multer.File): Promise<object> {
+  public async uploadImage(id: number, userImage: Express.Multer.File): Promise<object> {
+    console.log("id", id);  
     try{
       const { originalname, buffer } = userImage;
-      const data = await this.s3Service.uploadImage(originalname, buffer, 'users/profiles');
+      const url = await this.s3Service.uploadImage(originalname, buffer, 'users/profiles');
 
-      return {data}
+      const user = await this.userRepository.findOne({ where: { id } });
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      console.log('user', user);
+      user.photo_url = url;
+      await this.userRepository.save(user);
+
+      return {
+        url,
+        message: 'Image uploaded successfully',
+      }
     } catch (error) { 
       throw new BadRequestException('Error uploading image');
     }

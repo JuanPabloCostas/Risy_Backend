@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TodoModule } from './todo/todo.module';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
+import { PostsModule } from './posts/posts.module';
 import config from './core/config/config';
 
 @Module({
@@ -13,7 +14,8 @@ import config from './core/config/config';
       load: [config],
     }),
     TodoModule,
-    UsersModule
+    UsersModule,
+    PostsModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,30 +1,30 @@
-import { Column, Entity, ObjectId, ObjectIdColumn, OneToMany } from "typeorm";
+import { Column, Entity, ObjectId, ObjectIdColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Post } from "src/posts/entities/post.entity";
 
-@Entity({ database: 'mongodb' })
+@Entity({ name: "provider" })
 export class Provider {
-    @ObjectIdColumn()
-    _id: ObjectId;
+    @PrimaryGeneratedColumn({ name: "id" })
+    id: number;
 
-    @Column()
+@Column({ name: "name", type: "varchar", nullable: false })
     name: string;
 
-    @Column()
+@Column({ name: "email", type: "varchar", nullable: false })
     email: string;
 
-    @Column()
+@Column({ name: "address", type: "varchar", nullable: false })
     address: string;
 
-    @Column()
+@Column({ name: "phoneNumber", type: "varchar", nullable: false })
     phoneNumber: string;
 
-    @Column({ nullable: true })
+@Column({ name: "photoUrl", type: "varchar", nullable: true })
     photoUrl: string;
 
-    @Column()
+@Column({ name: "password", type: "varchar", nullable: false })
     password: string;
-    
-    @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })   
+
+@Column({ name: "registeredAt", type: "datetime", default: () => "CURRENT_TIMESTAMP" })
     registeredAt: Date;
 
     @OneToMany(() => Post, (post) => post.provider)

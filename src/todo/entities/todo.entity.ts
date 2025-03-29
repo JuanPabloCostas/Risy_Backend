@@ -1,11 +1,11 @@
 import { BaseEntity, Column, Entity, ObjectIdColumn, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ database: 'mongodb' }) 
+@Entity({ name: 'ni' }) 
 export class Todo extends BaseEntity {
-  @ObjectIdColumn()
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: number; //todo's primary key
 
-  @Column()
+  @Column({ name: 'user_id' })
   title: string; //todo's title 
 
   @Column()

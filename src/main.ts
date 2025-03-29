@@ -22,7 +22,7 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
-      transform: true,
+      transform: false,
       exceptionFactory: (errors) => {
         // console.log("ERRORS WHY:", errors);
         const messages = errors.map(
@@ -30,7 +30,7 @@ async function bootstrap() {
             `${error.property} - ${Object.values(error.constraints ? error.constraints : error.children).join(', ')}`,
         );
         console.log(messages);
-        
+
         return new BadRequestValidationPipeException(messages);
       },
     }),
@@ -38,6 +38,6 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 10000);
   console.log("App is listening on port", process.env.PORT ?? 10000);
-  
+
 }
 bootstrap();

@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException,
 import { UsersService } from './users.service';
 import { CreateUserDto, LoginDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ParseMongoIdPipe } from 'src/common/pipes/mongo-id/mongo-id.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { imageFilter } from 'src/common/helpers/fileFilter';
+import { ObjectId } from 'mongodb';
 
 @Controller('users')
 export class UsersController {
@@ -34,7 +34,7 @@ export class UsersController {
   }))
   uploadImage(
     @UploadedFile() userImage: Express.Multer.File,
-    @Param('id', ParseMongoIdPipe) id: string
+    @Param('id') id: string
   ){
     return this.usersService.uploadImage(id, userImage);
   }

@@ -9,20 +9,19 @@ import { MongoRepository, ObjectId } from 'typeorm';
 export class ProvidersService {
 
   constructor(
-    @InjectRepository(Provider) 
+    @InjectRepository(Provider)
     private readonly providerRepository: MongoRepository<Provider>,
-  ) {}
-  
+  ) { }
 
-  public async signUp(createProviderDto: CreateProviderDto): Promise<Provider> {
+
+  public async signUp(createProviderDto: CreateProviderDto) {
     const provider = this.providerRepository.create(createProviderDto);
 
     // provider.photo_url = //Put the image url here
 
     Object.assign(provider, await this.providerRepository.save(provider));
 
-    console.log("provider id:", provider._id);
-    
+
 
     return await this.findOne(provider._id)
   }
@@ -45,8 +44,8 @@ export class ProvidersService {
   }
 
   public async findOne(_id: ObjectId): Promise<Provider> {
-    
-    const provider = await this.providerRepository.findOne({where: { _id }});
+
+    const provider = await this.providerRepository.findOne({ where: { id } });
 
     if (!provider) {
       throw new NotFoundException('Provider not found');

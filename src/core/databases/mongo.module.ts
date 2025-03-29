@@ -14,19 +14,19 @@ import { getMetadataArgsStorage } from 'typeorm';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         
-
         console.log("database:", configService.get('database'));
         
 
         return {
-          type: 'mongodb',
-          url: configService.get('mongodb_uri'),
+          type: 'mysql',
+          host: configService.get('host'),
+          port: configService.get('port'),
+          username:configService.get('username'),
+          password: configService.get('password'),
           database: configService.get('database'),
-          entities: [Todo, User, Provider, Post],
-          logging: true,
-          autoLoadEntities: true,
+          entities: [Todo, User, Post, Provider],
           synchronize: true,
-          useUnifiedTopology: true,
+          logging: true,
         };
       },
       inject: [ConfigService],

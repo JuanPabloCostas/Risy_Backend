@@ -38,6 +38,6 @@ export class User {
     registeredAt: Date;
 
     @ManyToMany(() => Post, (post) => post.users)
-    @JoinTable()
+    // @JoinTable()
     posts: Post[]
 }

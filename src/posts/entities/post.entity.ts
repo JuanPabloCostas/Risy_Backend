@@ -46,7 +46,7 @@ export class Post {
     status: PostStatus;
 
     @ManyToMany(() => User, (user) => user.posts)
-    @JoinTable()
+    // @JoinTable()
     users: User[];
 
     @ManyToOne(() => Provider, (provider) => provider.posts)

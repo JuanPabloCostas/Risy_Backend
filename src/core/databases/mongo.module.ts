@@ -22,7 +22,7 @@ import { getMetadataArgsStorage } from 'typeorm';
           type: 'mongodb',
           url: configService.get('mongodb_uri'),
           database: configService.get('database'),
-          entities: [Todo, Post, User, Provider],
+          entities: [Todo, User, Provider, Post],
           logging: true,
           autoLoadEntities: true,
           synchronize: true,

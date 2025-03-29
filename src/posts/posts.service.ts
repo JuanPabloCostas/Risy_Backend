@@ -7,6 +7,8 @@ import { Post } from './entities/post.entity';
 import { ObjectId as MongoOjbect } from 'mongodb';
 import { ProvidersService } from 'src/providers/providers.service';
 import { S3Service } from '../aws/s3.service';
+import { HttpService } from '@nestjs/axios';
+import { ValidatefoodService } from '../common/providers/validatefood/validatefood.service';
 
 @Injectable()
 export class PostsService {
@@ -16,6 +18,8 @@ export class PostsService {
     private readonly postRepository: MongoRepository<Post>,
     private readonly providersService: ProvidersService,
     private readonly s3Service: S3Service,
+    private readonly httpService: HttpService,
+    private readonly validatefoodService: ValidatefoodService,
   ) { }
 
   public async create(createPostDto: CreatePostDto): Promise<Post> {
@@ -88,7 +92,7 @@ export class PostsService {
         const url = await this.s3Service.uploadImage(originalname, buffer, 'posts/profiles');
         urls.push(url);
       }
-
+      console.log("urls", urls);
       post.photoUrls = [...(post.photoUrls || []), ...urls];
       await this.postRepository.save(post);
 
@@ -101,4 +105,34 @@ export class PostsService {
       throw new BadRequestException('Error uploading images');
     }
   }
+
+  async validateFood(postId: number){
+    try {
+      // Buscar el post en la base de datos
+      const post = await this.postRepository.findOne({ 
+        where: { id: postId },
+      });
+      
+      if (!post) {
+        throw new NotFoundException('Post not found');
+      }
+      
+      // Validar la imagen usando el servicio de validación
+      const validationResults = await this.validatefoodService.validateImage(post.photoUrls[0]);
+      console.log("validationResults", validationResults);
+      if (validationResults.status === 200) {
+        post.status = false;
+        await this.postRepository.save(post);
+        return {
+          message: 'Post was blocked',
+          validationResults: validationResults.data,
+        };
+      }
+    } catch (error) {
+      console.error('Validation error:', error);
+      if (error.response?.data) {
+        console.error('API error response:', error.response.data);
+      }
+      throw new BadRequestException('Error validating food: ' + error.message);
+    }}
 }

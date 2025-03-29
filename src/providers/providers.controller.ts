@@ -26,8 +26,8 @@ export class ProvidersController {
   }
 
   @Get('/:id')
-  findOne(@Param('id') id: string) {
-    return this.providersService.findOne(new ObjectId(id));
+  findOne(@Param('id') id: number) {
+    return this.providersService.findOne(id);
   }
   @Patch(':providerId/image')
     @UseInterceptors(FileInterceptor('providerImage', {
@@ -44,7 +44,7 @@ export class ProvidersController {
     }
 
   @Put('/:id')
-  update(@Param('id') id: string, @Body() updateProviderDto: UpdateProviderDto) {
-    return this.providersService.update(new ObjectId(id), updateProviderDto);
+  update(@Param('id') id: number, @Body() updateProviderDto: UpdateProviderDto) {
+    return this.providersService.update(id, updateProviderDto);
   }
 }

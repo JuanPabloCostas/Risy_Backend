@@ -9,7 +9,7 @@ export class Provider {
     @Column({ name: "name", type: "varchar", nullable: false })
     name: string;
 
-    @Column({ name: "email", type: "varchar", nullable: false })
+    @Column({ name: "email", type: "varchar", nullable: false, unique: true })
     email: string;
 
     @Column({ name: "address", type: "varchar", nullable: false })

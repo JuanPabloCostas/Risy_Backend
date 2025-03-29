@@ -21,7 +21,7 @@ export class PostsService {
   public async create(createPostDto: CreatePostDto): Promise<Post> {
     const post = this.postRepository.create(createPostDto);
 
-    const provider = await this.providersService.findOne(new MongoOjbect(createPostDto.providerId));
+    const provider = await this.providersService.findOne(createPostDto.providerId);
 
     post.provider = provider;
     post.status = true;

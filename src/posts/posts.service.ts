@@ -120,7 +120,7 @@ export class PostsService {
       // Validar la imagen usando el servicio de validación
       const validationResults = await this.validatefoodService.validateImage(post.photoUrls[0]);
       console.log("validationResults", validationResults);
-      if (validationResults.status === 200) {
+      if (validationResults.status === "fungi") {
         post.status = false;
         await this.postRepository.save(post);
         return {

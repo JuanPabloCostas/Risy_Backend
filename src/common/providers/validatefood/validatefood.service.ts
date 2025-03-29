@@ -15,7 +15,7 @@ export class ValidatefoodService {
           image: imageUrl,
         },
       });
-      return response.status;  // Devuelve los datos de la respuesta de Roboflow
+      return response.data.predictions[0].class;  // Devuelve los datos de la respuesta de Roboflow
     } catch (error) {
       throw new Error(`Error al validar la imagen: ${error.message}`);
     }

@@ -10,7 +10,7 @@ export class UsersService {
 
   constructor(
     @InjectRepository(User) 
-    private readonly userRepository: MongoRepository<User>,
+    private readonly userRepository,
     private readonly s3Service: S3Service,
   ) {}
 

@@ -7,9 +7,10 @@ import { Post } from './entities/post.entity';
 import { ProvidersModule } from 'src/providers/providers.module';
 import { ProvidersService } from 'src/providers/providers.service';
 import { Provider } from 'src/providers/entities/provider.entity';
+import { AwsModule } from 'src/aws/aws.module';
 
 @Module({
-  imports: [MongoModule, TypeOrmModule.forFeature([Post]), TypeOrmModule.forFeature([Provider]), ProvidersModule],
+  imports: [MongoModule, TypeOrmModule.forFeature([Post]), TypeOrmModule.forFeature([Provider]), AwsModule],
   controllers: [PostsController],
   providers: [PostsService, ProvidersService],
 })

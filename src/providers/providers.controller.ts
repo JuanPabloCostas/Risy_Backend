@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseInterceptors, ParseIntPipe, UploadedFile } from '@nestjs/common';
 import { ProvidersService } from './providers.service';
 import { CreateProviderDto, LoginDto } from './dto/create-provider.dto';
 import { UpdateProviderDto } from './dto/update-provider.dto';
 import { ObjectId } from 'mongodb';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { imageFilter } from 'src/common/helpers/fileFilter';
 
 @Controller('providers')
 export class ProvidersController {
@@ -27,6 +29,19 @@ export class ProvidersController {
   findOne(@Param('id') id: string) {
     return this.providersService.findOne(new ObjectId(id));
   }
+  @Patch(':providerId/image')
+    @UseInterceptors(FileInterceptor('providerImage', {
+      limits: {
+        fileSize: 1024 * 1024 * 1 // 1 MB 
+      },
+      fileFilter: imageFilter,
+    }))
+    uploadImage(
+      @Param('providerId', ParseIntPipe) providerId: number,
+      @UploadedFile() providerImage: Express.Multer.File,
+    ){
+      return this.providersService.uploadImage(providerId, providerImage);
+    }
 
   @Put('/:id')
   update(@Param('id') id: string, @Body() updateProviderDto: UpdateProviderDto) {

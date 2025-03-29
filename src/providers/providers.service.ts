@@ -4,13 +4,15 @@ import { UpdateProviderDto } from './dto/update-provider.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Provider } from './entities/provider.entity';
 import { MongoRepository, ObjectId } from 'typeorm';
+import { S3Service } from 'src/aws/s3.service';
 
 @Injectable()
 export class ProvidersService {
 
   constructor(
     @InjectRepository(Provider)
-    private readonly providerRepository: MongoRepository<Provider>,
+    private readonly providerRepository,
+    private readonly s3Service: S3Service,
   ) { }
 
 
@@ -71,4 +73,35 @@ export class ProvidersService {
 
     return await this.findOne(_id);
   }
+
+  public async uploadImage(providerId: number, providerImage: Express.Multer.File): Promise<object> {
+    console.log("id", providerId);
+    try {
+      const provider = await this.providerRepository.findOne({ where: { id: providerId } });
+      if (!provider) {
+        throw new NotFoundException('Provider not found');
+      }
+  
+      const { originalname, buffer } = providerImage;
+      const url = await this.s3Service.uploadImage(originalname, buffer, 'providers/profiles');
+  
+      provider.photoUrl = url;
+      await this.providerRepository.save(provider);
+  
+      return {
+        url,
+        message: 'Image uploaded successfully',
+      };
+    } catch (error) {
+      console.error(error);
+  
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+  
+      throw new BadRequestException('Error uploading image');
+    }
+  }
+  
+  
 }

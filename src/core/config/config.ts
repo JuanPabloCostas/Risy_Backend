@@ -1,11 +1,14 @@
 export default () => {
   let config = {
-      mongodb_uri: process.env.MONGODB_CONNECTION_STRING,
-      database: process.env.MONGODB_DB,
+    host: process.env.HOST,
+    port: process.env.DB_PORT,
+    username: process.env.DB_NAME,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
   };
 
   console.log(config);
-  
+
 
   return config;
 }

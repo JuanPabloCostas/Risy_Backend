@@ -26,25 +26,16 @@ export class PostsService {
 
     Object.assign(post, await this.postRepository.save(post));
 
-    return await this.findOne(post._id)
+    return await this.findOne(post.id)
   }
 
-  public async findOne(_id: ObjectId): Promise<Post> {
+  public async findOne(id: number): Promise<Post> {
 
-    console.log("post id:", _id);
 
+    console.log("post id:", id);
     
 
-    const post = await this.postRepository.findOne({
-      where: { _id, status: true }, 
-      // relations: { provider: true }
-      join: {
-        alias: "post",
-        innerJoinAndSelect: {
-          "provider": "post.provider"
-        }
-      }
-    });
+    const post = await this.postRepository.findOne({where: { id, status: true }, relations: { provider: true }});
 
     console.log("post:", post);
     
@@ -62,18 +53,18 @@ export class PostsService {
 
   }
 
-  public async update(_id: ObjectId, updatePostDto: UpdatePostDto): Promise<Post> {
-    const post = await this.findOne(_id);
+  public async update(id: number, updatePostDto: UpdatePostDto): Promise<Post> {
+    const post = await this.findOne(id);
 
     Object.assign(post, updatePostDto);
 
     await this.postRepository.save(post);
 
-    return this.findOne(_id)
+    return this.findOne(id)
   };
 
-  public async delete(_id: ObjectId): Promise<Post> {
-    const post = await this.findOne(_id);
+  public async delete(id:number): Promise<Post> {
+    const post = await this.findOne(id);
 
     post.status = false;
 

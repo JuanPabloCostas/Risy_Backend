@@ -1,45 +1,45 @@
 
 import { Provider } from "src/providers/entities/provider.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, ObjectId, ObjectIdColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, ObjectId, ObjectIdColumn, PrimaryGeneratedColumn } from "typeorm";
 
 enum PostType {
     SALE = "sale",
     DONATE = "donate",
     COMPOSED = "compose",
 }
-enum PostStatus  {
+enum PostStatus {
     ACTIVE = "active",
     INACTIVE = "inactive",
 }
 
-@Entity({ database: 'mongodb' })
+@Entity({ name: "post" })
 export class Post {
-    @ObjectIdColumn()
-    _id: ObjectId;
+    @PrimaryGeneratedColumn({ name: "id" })
+    id: number;
 
-    @Column()
+    @Column({ name: "title", type: "varchar", nullable: false })
     title: string;
 
-    @Column({ nullable: true })
+    @Column({ name: "photoUrl", type: "varchar", nullable: true })
     photoUrl: string;
 
-    @Column()
+    @Column({ name: "description", type: "varchar", nullable: false })
     description: string;
 
-    @Column({ nullable: true })
+    @Column({ name: "originalPrice", type: "varchar", nullable: true })
     originalPrice: string;
 
-    @Column({ nullable: true })
+    @Column({ name: "price", type: "varchar", nullable: true })
     price: string;
 
-    @Column()
+    @Column({ name: "details", type: "varchar", nullable: false })
     details: string;
 
-    @Column({type: "enum"})
+    @Column({ name: "type", type: "enum", enum: PostType, nullable: false })
     type: PostType;
 
-    @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
+    @Column({ name: "registeredAt", type: "datetime", default: () => "CURRENT_TIMESTAMP" })
     registeredAt: Date;
 
     @Column({ type: "bool", default: true })

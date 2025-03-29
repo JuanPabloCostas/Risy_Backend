@@ -13,20 +13,36 @@ import { getMetadataArgsStorage } from 'typeorm';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
-        
 
         console.log("database:", configService.get('database'));
-        
 
-        return {
-          type: 'mongodb',
-          url: configService.get('mongodb_uri'),
+        const config = {
+          type: 'mysql',
+          host: configService.get('host'),
+          port: configService.get('port'),
+          username: configService.get('username'),
+
+          password: configService.get('password'),
           database: configService.get('database'),
-          entities: [Todo, User, Provider, Post],
-          logging: true,
-          autoLoadEntities: true,
+          entities: [Todo, User, Post, Provider],
           synchronize: true,
-          useUnifiedTopology: true,
+          logging: true,
+        };
+
+        console.log("Database config:", config);
+
+
+        //  other comment
+        return {
+          type: 'mysql',
+          host: configService.get('host'),
+          port: configService.get('port'),
+          username: configService.get('username'),
+          password: configService.get('password'),
+          database: configService.get('database'),
+          entities: [Todo, User, Post, Provider],
+          synchronize: true,
+          logging: true,
         };
       },
       inject: [ConfigService],
@@ -34,4 +50,4 @@ import { getMetadataArgsStorage } from 'typeorm';
   ],
   exports: [TypeOrmModule],
 })
-export class MongoModule {}
+export class MongoModule { }

@@ -23,7 +23,7 @@ export class ProvidersService {
 
 
 
-    // return await this.findOne(provider.id)
+    return await this.findOne(provider.id)
   }
 
   public async login(loginDto: LoginDto): Promise<Provider> {
@@ -43,7 +43,7 @@ export class ProvidersService {
 
   }
 
-  public async findOne(id: ObjectId): Promise<Provider> {
+  public async findOne(id: number): Promise<Provider> {
 
     const provider = await this.providerRepository.findOne({ where: { id } });
 
@@ -62,13 +62,13 @@ export class ProvidersService {
     return providers.map((provider) => ({ ...provider, password: undefined }));
   }
 
-  public async update(_id: ObjectId, updateProviderDto: UpdateProviderDto): Promise<Provider> {
-    const provider = await this.findOne(_id);
+  public async update(id: number, updateProviderDto: UpdateProviderDto): Promise<Provider> {
+    const provider = await this.findOne(id);
 
     Object.assign(provider, updateProviderDto);
 
     await this.providerRepository.save(provider);
 
-    return await this.findOne(_id);
+    return await this.findOne(id);
   }
 }

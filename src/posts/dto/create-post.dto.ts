@@ -1,4 +1,4 @@
-import { IsEAN, IsEnum, IsMongoId, IsNotEmpty, IsString } from "class-validator";
+import { IsEAN, IsEnum, IsInt, IsMongoId, IsNotEmpty, IsPositive, IsString } from "class-validator";
 import { ObjectId } from "typeorm";
 
 
@@ -33,6 +33,8 @@ export class CreatePostDto {
     @IsNotEmpty()
     type: PostType;
 
-    @IsMongoId()
-    providerId: string;
+    @IsNotEmpty()
+    @IsPositive()
+    @IsInt()
+    providerId: number;
 }

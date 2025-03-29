@@ -22,6 +22,6 @@ export class Provider {
     @Column()
     password: string;
     
-    @Column()
+    @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })   
     registeredAt: Date;
 }

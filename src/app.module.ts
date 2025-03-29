@@ -7,7 +7,7 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { ProvidersModule } from './providers/providers.module';
 import { AwsModule } from './aws/aws.module';
-import { S3Service } from './s3.service';
+import { S3Service } from './aws/s3.service';
 import config from './core/config/config';
 
 @Module({

@@ -23,8 +23,10 @@ export class CreateUserDto {
     phoneNumber: string;
 
     @IsString()
-    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-    @IsNotEmpty()
+    @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+        message:
+          'The password must have a Uppercase, lowercase letter and a number',
+      })    @IsNotEmpty()
     password: string;
 
     @IsEnum(UserType)

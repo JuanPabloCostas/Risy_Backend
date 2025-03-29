@@ -1,5 +1,4 @@
 import { Column, ObjectIdColumn, OneToMany } from "typeorm";
-import { Param } from '@nestjs/common';
 import { Post } from "src/posts/entities/post.entity";
 
 export class Provider {

@@ -42,8 +42,8 @@ export class Post {
     @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
     registeredAt: Date;
 
-    @Column({ type: "enum",default: PostStatus.ACTIVE })
-    status: PostStatus;
+    @Column({ type: "bool", default: true })
+    status: boolean;
 
     @ManyToMany(() => User, (user) => user.posts)
     // @JoinTable()

@@ -1,10 +1,10 @@
-import { Column, Entity, ObjectIdColumn, OneToMany } from "typeorm";
+import { Column, Entity, ObjectId, ObjectIdColumn, OneToMany } from "typeorm";
 import { Post } from "src/posts/entities/post.entity";
 
 @Entity({ database: 'mongodb' })
 export class Provider {
     @ObjectIdColumn()
-    id: string;
+    _id: ObjectId;
 
     @Column()
     name: string;

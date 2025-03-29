@@ -42,5 +42,9 @@ export class UsersService {
     return user;
   }
 
+  public async uploadImage(id: string): Promise<object> {
+    return 
+  }
+
 
 }

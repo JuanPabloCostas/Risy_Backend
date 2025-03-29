@@ -8,6 +8,7 @@ import { PostsModule } from './posts/posts.module';
 import { ProvidersModule } from './providers/providers.module';
 import { AwsModule } from './aws/aws.module';
 import { S3Service } from './aws/s3.service';
+import { CommonModule } from './common/common.module';
 import config from './core/config/config';
 
 @Module({
@@ -20,7 +21,8 @@ import config from './core/config/config';
     UsersModule,
     PostsModule,
     ProvidersModule,
-    AwsModule
+    AwsModule,
+    CommonModule
   ],
   controllers: [AppController],
   providers: [AppService, S3Service],

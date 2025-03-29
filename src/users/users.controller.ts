@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException 
 import { UsersService } from './users.service';
 import { CreateUserDto, LoginDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ParseMongoIdPipe } from 'src/common/pipes/mongo-id/mongo-id.pipe';
 
 @Controller('users')
 export class UsersController {
@@ -20,5 +21,12 @@ export class UsersController {
   @Get()
   listAllUsers() {
     return this.usersService.listAllUsers();
+  }
+
+  @Patch(':userId/image')
+  uploadImage(
+    @Param('id', ParseMongoIdPipe) id: string
+  ){
+    return this.usersService.uploadImage(id);
   }
 }

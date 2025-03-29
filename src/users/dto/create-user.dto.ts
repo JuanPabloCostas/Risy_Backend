@@ -1,4 +1,5 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, Matches } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsPhoneNumber, IsString, Matches } from "class-validator";
+import { In } from "typeorm";
 
 enum UserType {
     PUBLICUSER = "publicuser", 
@@ -20,6 +21,7 @@ export class CreateUserDto {
 
     @IsString()
     @IsNotEmpty()
+    // @IsPhoneNumber()
     phoneNumber: string;
 
     @IsString()
@@ -32,4 +34,14 @@ export class CreateUserDto {
     @IsEnum(UserType)
     @IsNotEmpty()
     type: UserType
+}
+
+export class LoginDto {
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
+
+    @IsString()
+    @IsNotEmpty()
+    password: string;
 }

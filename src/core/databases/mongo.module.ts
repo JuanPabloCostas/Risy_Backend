@@ -20,7 +20,7 @@ import { getMetadataArgsStorage } from 'typeorm';
         return {
           type: 'mysql',
           host: configService.get('host'),
-          port: configService.get('port'),
+          port: +configService.get('port'),
           username:configService.get('username'),
           password: configService.get('password'),
           database: configService.get('database'),

@@ -19,17 +19,17 @@ export class PostsController {
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string) {
-    return this.postsService.findOne(new ObjectId(id));
+  async findOne(@Param('id') id: number) {
+    return this.postsService.findOne(id);
   }
 
   @Put('/:id')
-  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(new ObjectId(id), updatePostDto);
+  async update(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto) {
+    return this.postsService.update(id, updatePostDto);
   }
 
   @Delete('/:id')
-  async delete(@Param('id') id: string) {
-    return this.postsService.delete(new ObjectId(id));
+  async delete(@Param('id') id: number) {
+    return this.postsService.delete(id);
   }
 }

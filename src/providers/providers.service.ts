@@ -23,7 +23,7 @@ export class ProvidersService {
 
 
 
-    return await this.findOne(provider._id)
+    // return await this.findOne(provider.id)
   }
 
   public async login(loginDto: LoginDto): Promise<Provider> {
@@ -43,7 +43,7 @@ export class ProvidersService {
 
   }
 
-  public async findOne(_id: ObjectId): Promise<Provider> {
+  public async findOne(id: ObjectId): Promise<Provider> {
 
     const provider = await this.providerRepository.findOne({ where: { id } });
 
